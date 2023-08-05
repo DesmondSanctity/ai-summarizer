@@ -1,0 +1,29 @@
+{
+  "name": "ai-summarizer",
+  "version": "1.0.0",
+  "description": "AI tool that summarizes text from documents using Langchain's Open AI implementation",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DesmondSanctity/ai-summarizer.git"
+  },
+  "keywords": [
+    "ai",
+    "text",
+    "docs",
+    "summarize"
+  ],
+  "author": "Desmond Obisi",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DesmondSanctity/ai-summarizer/issues"
+  },
+  "homepage": "https://github.com/DesmondSanctity/ai-summarizer#readme",
+  "dependencies": {
+    "langchain": "^0.0.122"
+  }
+}
