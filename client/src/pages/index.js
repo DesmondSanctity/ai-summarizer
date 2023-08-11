@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 
 
 
 export default function Home() {
   const editorRef = useRef(null);
+  const [view, setView] = useState();
   const log = () => {
     if (editorRef.current) {
       console.log(editorRef.current.getContent());
@@ -24,6 +25,39 @@ export default function Home() {
         </ul>
       </nav>
 
+      {/* Radio Selection */}
+      <div className="flex items-center justify-center p-4 bg-gray-200">
+        <div className="text-lg font-medium mr-4">Text format:</div>
+        <div className="flex items-center">
+          <div className="p-2 ml-2 bg-white rounded-lg">
+            <input
+              type="radio"
+              name="view"
+              value="upload"
+              onChange={() => setView('upload')}
+            />
+            <label className="ml-2">Upload Document(.doc or .pdf)</label>
+          </div>
+
+          <div className="p-2 ml-2 bg-white rounded-lg">
+            <input
+              type="radio"
+              name="view"
+              value="editor"
+              onChange={() => setView('editor')}
+            />
+            <label className="ml-2">Paste as Text</label>
+          </div>
+
+          <button
+            className="px-4 py-2 bg-blue-500 text-white rounded ml-4"
+            onClick={() => setView()}
+          >
+            Reset
+          </button>
+        </div>
+      </div>
+
       {/* Page Body */}
       <div className="flex flex-1 p-4">
 
@@ -34,7 +68,7 @@ export default function Home() {
             onInit={(evt, editor) => editorRef.current = editor}
             initialValue="This is the initial content of the editor."
             init={{
-              height: 700,
+              height: 600,
               width: 1000,
               menubar: false,
               plugins: [
@@ -52,12 +86,12 @@ export default function Home() {
         </div>
 
         {/* Side Section */}
-        <div className="flex-1 border border-gray-500 rounded p-4" style={{ height: '80vh' }}>
+        <div className="flex-1 border border-gray-500 rounded p-4" style={{ height: '70vh' }}>
           <p>Summarized content here...</p>
         </div>
 
       </div>
 
-    </div>
+    </div >
   )
 }
