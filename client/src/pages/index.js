@@ -6,8 +6,22 @@ import { Editor } from '@tinymce/tinymce-react';
 export default function Home() {
   const editorRef = useRef(null);
   const [view, setView] = useState();
-
+  const [summary, setSummary] = useState(null);
   const [file, setFile] = useState()
+
+  async function handleSummarize() {
+    const response = await fetch('/api/summarize', {
+      method: 'POST',
+      body: JSON.stringify({
+        text: editorRef.current.getContent(),
+        file: file,
+        paragraphs: 2
+      })
+    });
+
+    const data = await response.json();
+    setSummary(data.data);
+  }
 
   function handleChange(e) {
     setFile(e.target.files[0])
@@ -18,11 +32,7 @@ export default function Home() {
     setView();
   }
 
-  const log = () => {
-    if (editorRef.current) {
-      console.log(editorRef.current.getContent());
-    }
-  };
+
   return (
     <div className="flex flex-col h-screen">
 
@@ -63,7 +73,7 @@ export default function Home() {
 
           <button
             className="px-4 py-2 bg-blue-500 text-white rounded ml-4"
-            onClick={() => handleReset() }
+            onClick={() => handleReset()}
           >
             Reset
           </button>
@@ -94,7 +104,7 @@ export default function Home() {
                 content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
               }}
             />
-            <button onClick={log} className="px-4 py-2 mt-4 bg-blue-500 text-white rounded">Summarize</button>
+            <button onClick={handleSummarize} className="px-4 py-2 mt-4 bg-blue-500 text-white rounded">Summarize</button>
           </div>
         )}
 
@@ -119,7 +129,7 @@ export default function Home() {
                   )}
                 </div>
 
-                <button className="bg-blue-500 text-white px-4 py-2 rounded w-full">
+                <button onClick={handleSummarize} className="bg-blue-500 text-white px-4 py-2 rounded w-full">
                   Summarize
                 </button>
 
@@ -146,7 +156,13 @@ export default function Home() {
 
         {/* Side Section */}
         <div className="flex-1 border border-gray-400 rounded p-4" style={{ height: '70vh' }}>
-          <p>Summarized content here...</p>
+          {summary &&
+            <p> {summary} </p>
+          }
+
+          {!summary &&
+            <p> Summarized content here ... </p>
+          }
         </div>
 
       </div>
